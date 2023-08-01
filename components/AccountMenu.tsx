@@ -28,7 +28,7 @@ export default function AccountMenu({visible}:iAccountMenu) {
               </p>
             </Link>
 
-            <div onClick={ () => signOut({ redirect: true, callbackUrl: 'nextjsmoviecloud-production.up.railway.app/login' }) } className='text-center text-white hover:underline py-1'>
+            <div onClick={ () => signOut({ redirect: true, callbackUrl: '/login' }) } className='text-center text-white hover:underline py-1'>
               Sign Out
             </div>
 

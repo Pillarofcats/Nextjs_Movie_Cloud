@@ -31,7 +31,7 @@ export default function MobNavMenu ({visible}:iMobileMenu) {
         </Link>
         
         <div 
-          onClick={ () => signOut({ redirect: true, callbackUrl: 'nextjsmoviecloud-production.up.railway.app/login' }) } className='flex-1 text-center text-white cursor-pointer hover:underline py-1'>
+          onClick={ () => signOut({ redirect: true, callbackUrl: '/login' }) } className='flex-1 text-center text-white cursor-pointer hover:underline py-1'>
           Sign Out
         </div>
 
