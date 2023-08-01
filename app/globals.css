@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  body {
+    @apply tracking-wide bg-[url('../public/images/bg.jpg')] bg-no-repeat bg-cover bg-fixed bg-center;
+  }
+
+  .l-0 {
+    left: 100%;
+  }
+
+  .debug {
+    border: 4px solid red;
+  }
+
+  .grid-dynamic {
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  }
+}
+
+
