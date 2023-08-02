@@ -27,12 +27,12 @@ const HomePage = () => {
   if(isLoading) return (<Loading />)
 
   return (
-    <main className="text-white -mt-14 flex flex-col">
+    <div className="text-white -mt-14 flex flex-col">
       <Billboard />
       <div className="flex flex-1">
         <MovieList movies={ movies } title="Trending Movies" />
       </div>
-    </main>
+    </div>
   )
 }
 

@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
   body {
     @apply tracking-wide bg-[url('../public/images/bg.jpg')] bg-no-repeat bg-cover bg-fixed bg-center;
   }
@@ -20,5 +19,3 @@
     grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
   }
 }
-
-
