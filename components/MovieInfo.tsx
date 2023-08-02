@@ -8,6 +8,7 @@ export default function MovieInfo({ movie, isLoading }:iMovieCard) {
   //Check
   if(isLoading) return (<Loading/>)
 
+  //className="px-8 pb-8 flex flex-col bg-gray-800 bg-opacity-80 w-full"
   return (
     <div className="flex flex-col px-8 space-y-8 py-10 bg-gray-800 bg-opacity-60 pt-10">
         <div className="flex md:flex-row flex-col gap-5">

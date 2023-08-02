@@ -26,11 +26,11 @@ export default function InfoPage() {
   })
 
   return (
-    <>
+    <div className="flex flex-col h-[calc(100vh-3.5rem)] text-white">
       <Navbar />
-      <main className="text-white gap-5">
+      <div className="flex flex-1">
         <MovieInfo movie={ movie } isLoading={ isLoading }/>
-      </main>
-    </>
+      </div>
+    </div>
   )
 }

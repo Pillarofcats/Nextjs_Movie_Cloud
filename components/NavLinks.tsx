@@ -33,7 +33,7 @@ export default function NavLinks() {
 
         <div onClick={ toggleAccountMenu } className='select-none flex flex-row items-center gap-2 cursor-pointer relative'>
           <div className='w-6 h-6 rounded-md overflow-hidden'>
-            <img src="/images/default.jpg" alt=""/> 
+            <img src="/images/default.jpg" alt="Default user image"/> 
           </div>
           <GoTriangleDown className={ `transition duration-200 ${visibleAccountMenu ? 'rotate-180' : 'rotate-0'}` }/>
           <AccountMenu visible={ visibleAccountMenu } />
