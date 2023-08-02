@@ -22,7 +22,7 @@ export default function AccountMenu({visible}:iAccountMenu) {
           <div className='flex flex-col gap-3 py-3 text-sm border'>
 
             <Link href='/profiles' className='group/item flex flex-row gap-3 w-full justify-center items-center'>
-              <img className='rounded-md w-7' src="images/default.jpg" alt="" />
+              <img className='rounded-md w-7' src="/images/default.jpg" alt="" />
               <p className='text-white group-hover/item:underline'>
                 { user?.name }
               </p>
