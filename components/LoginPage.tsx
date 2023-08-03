@@ -75,7 +75,7 @@ export default function LoginPage() {
         name,
         password,
       }).then((res) => {
-        console.log('res', res)
+        
         if(res.data?.error) {
           setServerMessage('Email already exists')
           setIsSMVisible(true)
