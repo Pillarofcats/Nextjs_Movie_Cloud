@@ -35,7 +35,7 @@ const StoreContextProvider = ({children}:iChildren) => {
           { children }
         {/* </StoreFavoritesContext.Provider> */}
       {/* // </StoreMoviesContext.Provider> */}
-    // </StoreUserContext.Provider>
+    </StoreUserContext.Provider>
   )
 }
 

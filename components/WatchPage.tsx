@@ -72,7 +72,7 @@ const WatchPage = () => {
   if(isLoading) return (<Loading />)
 
   return (
-    <div className="relative h-screen w-screen bg-black">
+    <div className="relative h-full w-full bg-black">
       <nav className={`
         ease-in-out
         duration-1000
@@ -104,7 +104,7 @@ const WatchPage = () => {
         onPause={ () => videoNavSlideAnimationOnPause( )}
         onPlay={ () => videoNavSlideAnimationOnPlay() }
         controls
-        className='h-full w-full' 
+        className='h-screen w-screen' 
         src={ movie?.videoUrl }></video>
     </div>
   )
