@@ -26,8 +26,9 @@ export default function BillboardPlayBtn({ movieId }:iPlayMovie) {
         px-2
         md:px-4
         w-auto
-        text-md
-        lg:text-lg
+        text-large
+        md:text-1xl
+        lg:text-2xl
         font-semibold
         flex
         flex-row
