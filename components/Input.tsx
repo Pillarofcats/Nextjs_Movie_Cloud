@@ -15,6 +15,8 @@ export default function Input({
     <div className='relative z-10 w-full'>
       
       <input
+        aria-required
+        required
         onChange={onChange}
         type={type}
         value={value}

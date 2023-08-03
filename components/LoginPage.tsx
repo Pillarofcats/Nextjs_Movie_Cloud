@@ -2,6 +2,7 @@
 
 //Components
 import Input from '@/components/Input'
+import ServerResponse from '@/components/ServerResponse'
 //Axios
 import axios from 'axios'
 //React
@@ -13,6 +14,8 @@ type tVariant = 'login' | 'register'
 //ReactIcons
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
+//Nextjs
+import { useRouter } from 'next/navigation'
 
 //Page
 export default function LoginPage() {
@@ -21,15 +24,41 @@ export default function LoginPage() {
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const [variant, setVariant] = useState<tVariant>('login')
+  const [variant, setVariant] = useState<tVariant>("login")
+  const [serverMessage, setServerMessage] = useState<string>("Null")
+  const [isSMVisible, setIsSMVisible] = useState<boolean>(false)
+
+  const router = useRouter()
+
+  const submit = (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSMVisible(false)
+    setServerMessage("Null")
+
+    variant === 'login' ? login() : register()
+  }
 
   const login = useCallback( async () => {
     
     try {
+
       await signIn('credentials', {
+        redirect:false,
         email,
-        password,
-        callbackUrl: '/profiles'
+        password
+      }).then((res) => {
+
+        if(res?.error) {
+          router.push('/login')
+          setServerMessage(res.error)
+          setIsSMVisible(true)
+          
+        } else {
+          router.push('/profiles')
+        }
+
+      }).catch((error) => {
+        console.error(error)
       })
 
     } catch(error) {
@@ -40,13 +69,23 @@ export default function LoginPage() {
   const register = useCallback(async () => {
 
     try {
+
       await axios.post('/api/register', {
         email,
         name,
         password,
-      })
+      }).then((res) => {
+        console.log('res', res)
+        if(res.data?.error) {
+          setServerMessage('Email already exists')
+          setIsSMVisible(true)
+        } else {
+          login()
+        }
 
-      login()
+      }).catch((error) =>
+        console.error(error)
+      )
 
     } catch (error) {
       console.log(error)
@@ -59,80 +98,86 @@ export default function LoginPage() {
 
   return (
     <div className="h-screen flex flex-col items-center justify-center">
-      <div className="bg-opacity-50 p-10 mt-2 max-w-sm lg:max-w-md lg:w-2/5 rounded-md w-full flex flex-col justify-self-center items-center gap-4 bg-black">
+      <div className="bg-opacity-50 p-10 mt-2 max-w-sm rounded-md w-full flex flex-col justify-self-center items-center gap-4 bg-black">
 
         <h1 className="text-4xl text-white font-extrabold">{variant === 'login' ? 'Login' : 'Register'}</h1>
 
-        { variant === 'register' ?
-            <Input 
-              label="Username"
-              onChange={(ev:React.ChangeEvent<HTMLInputElement>) => setName(ev.target.value)}
-              id="name"
-              type="name"
-              value={name}
-            />
-            : null
-        }
+        <form onSubmit={(e) => submit(e) } className="flex flex-col gap-2">
 
-        <Input 
-          label="Email"
-          onChange={(ev:React.ChangeEvent<HTMLInputElement>) => setEmail(ev.target.value)}
-          id="email"
-          type="email"
-          value={email}
-        />
+          { variant === 'register' ?
+              <Input 
+                label="Username"
+                onChange={(ev:React.ChangeEvent<HTMLInputElement>) => setName(ev.target.value)}
+                id="name"
+                type="text"
+                value={name}
+              />
+              : null
+          }
 
-        <Input 
-          label="Password"
-          onChange={(ev:React.ChangeEvent<HTMLInputElement>) => setPassword(ev.target.value)}
-          id="password"
-          type="password"
-          value={password}
-        />
+          <Input 
+            label="Email"
+            onChange={(ev:React.ChangeEvent<HTMLInputElement>) => setEmail(ev.target.value)}
+            id="email"
+            type="email"
+            value={email}
+          />
 
-        <button 
-          onClick={variant === 'login' ? login : register}
-          className="py-3 bg-blue-400 text-white rounded-md w-full mt-4 hover:bg-blue-500 transition">
-            Submit
+          <Input 
+            label="Password"
+            onChange={(ev:React.ChangeEvent<HTMLInputElement>) => setPassword(ev.target.value)}
+            id="password"
+            type="password"
+            value={password}
+          />
+
+          <ServerResponse message={ serverMessage} isVisible={ isSMVisible} />
+
+          <button 
+            type="submit"
+            className="py-3 bg-blue-400 text-white rounded-md w-full mt-1 hover:bg-blue-500 transition">
+              Submit
           </button>
+        </form>
 
-          <div className="flex flex-row items-center gap-4 mt-8 justify-center">
-            <div
-              onClick={ () => signIn('google', { callbackUrl: '/profiles' }) }
-              className="
-                w-10
-                h-10
-                bg-white
-                rounded-full
-                flex
-                items-center
-                justify-center
-                cursor-pointer
-                hover:opacity-80
-                transition"
-            >
-              <FcGoogle size={30} />
-            </div>
-            <div
-              onClick={ () => signIn('github', { callbackUrl: '/profiles' }) }
-              className="
-                w-10
-                h-10
-                bg-white
-                rounded-full
-                flex
-                items-center
-                justify-center
-                cursor-pointer
-                hover:opacity-80
-                transition"
-            >
-              <FaGithub size={30} />
-            </div>
+        <div className="flex flex-row items-center gap-4 mt-2 justify-center">
+          <div
+            onClick={ () => signIn('google', { callbackUrl: '/profiles' }) }
+            className="
+              w-10
+              h-10
+              bg-white
+              rounded-full
+              flex
+              items-center
+              justify-center
+              cursor-pointer
+              hover:opacity-80
+              transition"
+          >
+            <FcGoogle size={30} />
           </div>
 
+          <div
+            onClick={ () => signIn('github', { callbackUrl: '/profiles' }) }
+            className="
+              w-10
+              h-10
+              bg-white
+              rounded-full
+              flex
+              items-center
+              justify-center
+              cursor-pointer
+              hover:opacity-80
+              transition"
+          >
+            <FaGithub size={30} />
+          </div>
+        </div>
+
         <div className="text-center">
-          <p className="mt-4 text-white">
+          <p className=" text-white">
             { variant === "register" ? 'Already have an account?' : 'First time using Movie Cloud?' }
           </p>
           <p onClick={toggleVariant} className="text-[#9fd7ff] ml-1 hover:underline cursor-pointer">

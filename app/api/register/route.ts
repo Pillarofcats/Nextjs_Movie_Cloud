@@ -19,7 +19,7 @@ export async function POST(req:NextRequest, res:NextResponse) {
     //Check user exists
     if(existingUser) {
       //UNPROCESSABLE CONTENT 422
-      return NextResponse.json({error:'Email already exists'}, { status:422 })
+      return NextResponse.json({ error:'Email already exists' })
     }
     //Encrypt user password
     const hashPassword = await bcrypt.hash(password, 12)
